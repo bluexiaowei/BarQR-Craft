@@ -1,59 +1,71 @@
 # BarQR Craft
 
-专业二维码 & 条形码生成器，纯浏览器端运行，无需后端服务器。
+[中文](./README.zh-CN.md)
 
-## 功能
+A professional QR code & barcode generator / scanner that runs entirely in the browser — no backend required.
 
-- **二维码生成**：实时生成 QR Code，支持调整尺寸、前景色、背景色
-- **条形码生成**：支持 CODE128、EAN13、CODE39、ITF14、UPC-A 等格式
-- **外观定制**：颜色选择器、尺寸滑块、条形码线宽/高度、底部文本显示
-- **一键下载**：将码图导出为 PNG 图片
-- **响应式布局**：桌面端和移动端均有良好体验
-- **暗色模式**：跟随系统主题自动切换
+## Features
 
-## 技术栈
+- **QR Code Generation**: Real-time QR codes with adjustable size, foreground, and background colors
+- **Barcode Generation**: Supports CODE128, EAN13, CODE39, ITF14, UPC-A, and more
+- **Code Scanning**: Upload, drag-and-drop, or paste images to decode QR codes and common barcodes
+- **Appearance Customization**: Color pickers, size sliders, barcode line width/height, optional bottom text
+- **One-Click Download**: Export codes as PNG images
+- **Responsive Layout**: Works well on desktop and mobile
+- **Dark Mode**: Follows system theme automatically
+- **Bilingual UI**: Switch between 中文 and English; auto-detects browser language on first visit
 
-- React 19 + Vite 8
-- qrcode.react（二维码渲染）
-- JsBarcode（条形码渲染）
-- 纯 CSS（CSS 变量 + Grid/Flex 布局）
+## Tech Stack
 
-## 快速开始
+- React 19 + Vite 8 + Tailwind CSS 4
+- qrcode.react (QR rendering)
+- JsBarcode (barcode rendering)
+- jsQR / @zxing/browser (code scanning)
+- Pure CSS (CSS variables + Grid/Flex layout)
+
+## Quick Start
 
 ```bash
-# 安装依赖
+# Install dependencies
 npm install
 
-# 开发模式
+# Development server
 npm run dev
 
-# 构建生产版本（静态页面输出到 dist/）
+# Production build (static output to dist/)
 npm run build
 
-# 预览构建结果
+# Preview production build
 npm run preview
 ```
 
-## 项目结构
+## Project Structure
 
 ```
 BarQR-Craft/
-├── index.html              # 入口 HTML
+├── index.html              # Entry HTML
 ├── package.json
-├── vite.config.js          # Vite 配置
-├── public/                 # 静态资源
+├── vite.config.js          # Vite config
+├── public/                 # Static assets
 │   └── favicon.svg
 └── src/
-    ├── main.jsx            # React 入口
-    ├── App.jsx             # 主应用组件
-    ├── App.css             # 应用样式
-    └── index.css           # 全局样式 & CSS 变量
+    ├── main.jsx            # React entry
+    ├── App.jsx             # Root app component
+    ├── App.css             # App styles
+    ├── pages/              # Pages (QR / Barcode / Scan)
+    ├── components/         # Reusable components
+    ├── i18n/               # Internationalization (zh / en)
+    │   ├── I18nContext.jsx
+    │   └── locales/
+    │       ├── zh.js
+    │       └── en.js
+    └── index.css           # Global styles & CSS variables
 ```
 
-## 浏览器兼容性
+## Browser Compatibility
 
-Chrome、Firefox、Safari、Edge 最新版。
+Latest versions of Chrome, Firefox, Safari, and Edge.
 
-## 许可
+## License
 
-GNU AGPL v3.0 — 允许自由使用、修改和分发，但不允许闭源商业应用。详见 [LICENSE](./LICENSE)。
+GNU AGPL v3.0 — Free to use, modify, and distribute, but closed-source commercial use is not permitted. See [LICENSE](./LICENSE) for details.

@@ -1,7 +1,10 @@
 import { NavLink, Outlet } from 'react-router-dom';
+import { useI18n } from './i18n/I18nContext.jsx';
 import './App.css';
 
 export default function App() {
+  const { locale, setLocale, t } = useI18n();
+
   return (
     <div className="min-h-screen flex flex-col" style={{ background: 'var(--bg)' }}>
       {/* Header */}
@@ -23,7 +26,7 @@ export default function App() {
                 }
                 style={({ isActive }) => isActive ? { background: '#2563eb' } : {}}
               >
-                ▣ 二维码
+                ▣ {t('nav.qr')}
               </NavLink>
               <NavLink
                 to="/barcode"
@@ -36,7 +39,7 @@ export default function App() {
                 }
                 style={({ isActive }) => isActive ? { background: '#2563eb' } : {}}
               >
-                │││ 条形码
+                │││ {t('nav.barcode')}
               </NavLink>
               <NavLink
                 to="/scan"
@@ -49,20 +52,49 @@ export default function App() {
                 }
                 style={({ isActive }) => isActive ? { background: '#2563eb' } : {}}
               >
-                📷 识别
+                📷 {t('nav.scan')}
               </NavLink>
             </nav>
           </div>
-          <span
-            className="text-xs px-2.5 py-0.5 rounded-full"
-            style={{
-              background: 'rgba(59,130,246,0.12)',
-              color: '#93c5fd',
-              border: '1px solid rgba(59,130,246,0.2)',
-            }}
-          >
-            免费
-          </span>
+          <div className="flex items-center gap-2">
+            <div
+              className="flex items-center rounded-lg p-0.5 text-xs font-semibold"
+              style={{ background: 'rgba(255,255,255,0.08)' }}
+            >
+              <button
+                type="button"
+                onClick={() => setLocale('zh')}
+                className="px-2 py-0.5 rounded-md transition"
+                style={{
+                  background: locale === 'zh' ? 'rgba(59,130,246,0.35)' : 'transparent',
+                  color: locale === 'zh' ? '#fff' : '#94a3b8',
+                }}
+              >
+                中
+              </button>
+              <button
+                type="button"
+                onClick={() => setLocale('en')}
+                className="px-2 py-0.5 rounded-md transition"
+                style={{
+                  background: locale === 'en' ? 'rgba(59,130,246,0.35)' : 'transparent',
+                  color: locale === 'en' ? '#fff' : '#94a3b8',
+                }}
+              >
+                EN
+              </button>
+            </div>
+            <span
+              className="text-xs px-2.5 py-0.5 rounded-full"
+              style={{
+                background: 'rgba(59,130,246,0.12)',
+                color: '#93c5fd',
+                border: '1px solid rgba(59,130,246,0.2)',
+              }}
+            >
+              {t('nav.free')}
+            </span>
+          </div>
         </div>
       </header>
 
@@ -76,8 +108,8 @@ export default function App() {
         className="border-t py-4 text-center text-xs"
         style={{ borderColor: 'var(--border)', color: 'var(--text-muted)' }}
       >
-        <p>BarQR Craft · 一行一码 · 实时生成 · 数据不会离开您的设备</p>
-        <p className="mt-1 opacity-60">Built with React + Vite · Free &amp; Open Source</p>
+        <p>{t('footer.tagline')}</p>
+        <p className="mt-1 opacity-60">{t('footer.builtWith')}</p>
       </footer>
     </div>
   );

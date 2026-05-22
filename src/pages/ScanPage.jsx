@@ -1,6 +1,7 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import jsQR from 'jsqr';
 import { BrowserMultiFormatReader } from '@zxing/browser';
+import { useI18n } from '../i18n/I18nContext.jsx';
 
 function readFileAsImage(file) {
   return new Promise((resolve, reject) => {
@@ -86,6 +87,7 @@ async function decodeImage(img) {
 }
 
 export default function ScanPage() {
+  const { t } = useI18n();
   const [result, setResult] = useState(null);
   const [preview, setPreview] = useState(null);
   const [error, setError] = useState('');
@@ -95,7 +97,7 @@ export default function ScanPage() {
 
   const processFile = useCallback(async (file) => {
     if (!file.type.startsWith('image/')) {
-      setError('请选择图片文件（PNG / JPG / WebP 等）');
+      setError(t('scan.errorNotImage'));
       return;
     }
     setLoading(true);
@@ -108,14 +110,14 @@ export default function ScanPage() {
       if (decoded) {
         setResult(decoded);
       } else {
-        setError('未能识别码图内容。请确保图片清晰，码图完整可见。');
+        setError(t('scan.errorNotRecognized'));
       }
     } catch {
-      setError('图片读取失败，请重试。');
+      setError(t('scan.errorReadFailed'));
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [t]);
 
   const onFileChange = useCallback((e) => {
     const file = e.target.files?.[0];
@@ -158,7 +160,7 @@ export default function ScanPage() {
         className="rounded-2xl p-5 md:p-6 flex flex-col gap-4"
         style={{ background: 'var(--surface)', boxShadow: 'var(--shadow-card)', border: '1px solid var(--border)' }}
       >
-        <h2 className="font-semibold text-sm" style={{ color: 'var(--text-heading)' }}>上传码图</h2>
+        <h2 className="font-semibold text-sm" style={{ color: 'var(--text-heading)' }}>{t('scan.uploadTitle')}</h2>
         <div
           className={`flex flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed p-8 text-center cursor-pointer transition ${
             dragOver ? 'border-blue-500 bg-blue-50' : ''
@@ -174,13 +176,13 @@ export default function ScanPage() {
         >
           <span className="text-3xl opacity-40">📷</span>
           <div>
-            <p className="text-sm font-medium" style={{ color: 'var(--text-heading)' }}>拖拽图片到此处</p>
-            <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>点击选择文件 · 或 Ctrl+V 粘贴</p>
+            <p className="text-sm font-medium" style={{ color: 'var(--text-heading)' }}>{t('scan.dropHint')}</p>
+            <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>{t('scan.selectHint')}</p>
           </div>
         </div>
         <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={onFileChange} />
         {error && <div className="code-item-error">{error}</div>}
-        {loading && <p className="text-sm text-center" style={{ color: 'var(--text-muted)' }}>正在识别...</p>}
+        {loading && <p className="text-sm text-center" style={{ color: 'var(--text-muted)' }}>{t('scan.recognizing')}</p>}
       </aside>
 
       <section
@@ -189,7 +191,7 @@ export default function ScanPage() {
       >
         {preview ? (
           <>
-            <img src={preview} alt="预览" className="max-w-full max-h-64 rounded-lg object-contain"
+            <img src={preview} alt={t('scan.preview')} className="max-w-full max-h-64 rounded-lg object-contain"
                  style={{ border: '1px solid var(--border)' }} />
             {result ? (
               <div className="w-full flex flex-col gap-2">
@@ -198,7 +200,7 @@ export default function ScanPage() {
                         style={{ background: 'var(--primary-light)', color: 'var(--primary)' }}>
                     {result.format}
                   </span>
-                  <span className="text-xs" style={{ color: 'var(--text-muted)' }}>识别结果</span>
+                  <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{t('scan.resultLabel')}</span>
                 </div>
                 <div className="w-full p-3 rounded-lg text-sm font-mono break-all"
                      style={{ background: 'var(--surface-alt)', border: '1px solid var(--border)', color: 'var(--text-heading)' }}>
@@ -206,18 +208,18 @@ export default function ScanPage() {
                 </div>
                 <button type="button" className="btn-download-all self-center" style={{ marginTop: 0 }}
                         onClick={() => navigator.clipboard.writeText(result.content)}>
-                  📋 复制内容
+                  📋 {t('scan.copy')}
                 </button>
               </div>
             ) : !error && !loading ? (
-              <p className="text-sm" style={{ color: 'var(--text-muted)' }}>未能识别码图内容</p>
+              <p className="text-sm" style={{ color: 'var(--text-muted)' }}>{t('scan.notRecognized')}</p>
             ) : null}
           </>
         ) : (
           <div className="preview-placeholder">
             <span className="icon">📷</span>
-            <p>上传一张码图进行识别</p>
-            <p className="text-xs mt-2" style={{ color: 'var(--text-muted)' }}>支持二维码及常见条形码格式</p>
+            <p>{t('scan.emptyHint')}</p>
+            <p className="text-xs mt-2" style={{ color: 'var(--text-muted)' }}>{t('scan.supportedFormats')}</p>
           </div>
         )}
       </section>
