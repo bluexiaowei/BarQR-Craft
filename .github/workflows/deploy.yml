@@ -31,6 +31,9 @@ jobs:
         env:
           BASE_PATH: /${{ github.event.repository.name }}/
 
+      # GitHub Pages SPA fallback: serve index.html for client-side routes
+      - run: cp dist/index.html dist/404.html
+
       - uses: actions/configure-pages@v4
 
       - uses: actions/upload-pages-artifact@v3

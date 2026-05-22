@@ -4,6 +4,12 @@
 
 专业二维码 & 条形码生成 / 识别工具，纯浏览器端运行，无需后端服务器。
 
+## 在线访问
+
+**https://bluexiaowei.github.io/BarQR-Craft/**
+
+每次推送到 `main` 分支后，自动部署至 GitHub Pages。
+
 ## 功能
 
 - **二维码生成**：实时生成 QR Code，支持调整尺寸、前景色、背景色
@@ -37,15 +43,30 @@ npm run build
 
 # 预览构建结果
 npm run preview
+
+# 本地预览 GitHub Pages 构建
+BASE_PATH=/BarQR-Craft/ npm run build && npm run preview
 ```
+
+## 部署
+
+通过 [GitHub Pages](https://pages.github.com/) 托管静态站点，配置文件见 [`.github/workflows/deploy.yml`](./.github/workflows/deploy.yml)：
+
+- **触发条件**：推送到 `main` 分支，或手动触发 workflow
+- **Base path**：`/BarQR-Craft/`（与仓库名一致）
+- **构建产物**：`dist/` 目录上传为 Pages artifact
+
+Workflow 成功后，可通过 **https://bluexiaowei.github.io/BarQR-Craft/** 访问。
 
 ## 项目结构
 
 ```
 BarQR-Craft/
+├── .github/workflows/
+│   └── deploy.yml          # GitHub Pages 自动部署
 ├── index.html              # 入口 HTML
 ├── package.json
-├── vite.config.js          # Vite 配置
+├── vite.config.js          # Vite 配置（读取 BASE_PATH 适配 Pages）
 ├── public/                 # 静态资源
 │   └── favicon.svg
 └── src/

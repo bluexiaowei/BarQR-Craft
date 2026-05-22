@@ -4,6 +4,12 @@
 
 A professional QR code & barcode generator / scanner that runs entirely in the browser — no backend required.
 
+## Live Demo
+
+**https://bluexiaowei.github.io/BarQR-Craft/**
+
+Deployed automatically to GitHub Pages on every push to `main`.
+
 ## Features
 
 - **QR Code Generation**: Real-time QR codes with adjustable size, foreground, and background colors
@@ -37,15 +43,30 @@ npm run build
 
 # Preview production build
 npm run preview
+
+# Preview GitHub Pages build locally
+BASE_PATH=/BarQR-Craft/ npm run build && npm run preview
 ```
+
+## Deployment
+
+Static site hosting via [GitHub Pages](https://pages.github.com/). Configuration lives in [`.github/workflows/deploy.yml`](./.github/workflows/deploy.yml):
+
+- **Trigger**: push to `main`, or manual workflow dispatch
+- **Base path**: `/BarQR-Craft/` (matches the repository name)
+- **Output**: `dist/` uploaded as a Pages artifact
+
+After the workflow succeeds, the site is available at **https://bluexiaowei.github.io/BarQR-Craft/**.
 
 ## Project Structure
 
 ```
 BarQR-Craft/
+├── .github/workflows/
+│   └── deploy.yml          # GitHub Pages CI/CD
 ├── index.html              # Entry HTML
 ├── package.json
-├── vite.config.js          # Vite config
+├── vite.config.js          # Vite config (reads BASE_PATH for Pages)
 ├── public/                 # Static assets
 │   └── favicon.svg
 └── src/

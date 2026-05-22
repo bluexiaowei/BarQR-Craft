@@ -2,6 +2,7 @@
   "name": "barqr-craft",
   "private": true,
   "version": "1.0.0",
+  "homepage": "https://bluexiaowei.github.io/BarQR-Craft",
   "type": "module",
   "scripts": {
     "dev": "vite",

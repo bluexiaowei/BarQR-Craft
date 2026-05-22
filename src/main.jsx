@@ -11,7 +11,7 @@ import ScanPage from './pages/ScanPage.jsx';
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <I18nProvider>
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <Routes>
         <Route element={<App />}>
           <Route index element={<Navigate to="/qr" replace />} />
